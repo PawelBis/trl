@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "TurnSystem",
 "language": "GDScript",
-"path": "res://Scenes/TurnSystem.gd"
+"path": "res://Scripts/TurnSystem.gd"
 } ]
 _global_script_class_icons={
 "TurnSystem": ""
