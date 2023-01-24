@@ -2,15 +2,8 @@ extends Node
 
 var baseMoveSpeed = 100
 var currentMoveSpeed = baseMoveSpeed
-onready var turnSystem = $"../../TurnSystem"
-onready var turnCounter = $"../../TurnSystem/TurnCounter"
 
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+signal command_executed(cost)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,21 +29,22 @@ func get_input():
 		
 func _physics_process(_delta):
 	get_input()
-	
+
+
 func _tryToMove(x, y, diagonal):
 	if !diagonal:
 		$Sprite.position.x = $Sprite.position.x + x
 		$Sprite.position.y = $Sprite.position.y + y
-		turnCounter._advanceTime(currentMoveSpeed)
-		
-		
+		5
 	if diagonal:
 		$Sprite.position.x = $Sprite.position.x + x
 		$Sprite.position.y = $Sprite.position.y + y
-		turnCounter._advanceTime(currentMoveSpeed * turnSystem.diagonalMovementCost)
-		
-		
-		
+		1
+	emit_signal("command_executed", currentMoveSpeed)
+
+
+
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

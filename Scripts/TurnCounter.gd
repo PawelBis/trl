@@ -15,8 +15,12 @@ func _ready():
 func _advanceTime(turnUnits):
 	previousTurn = currentTurn
 	currentTurn += turnUnits
-	$"../../GUI/HFlowContainer/CurrentTurnValueLabel".text = str(currentTurn)
+	$CurrentTurnValueLabel.text = str(currentTurn)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Player_command_executed(cost):
+	_advanceTime(cost)
