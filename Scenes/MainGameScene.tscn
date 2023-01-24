@@ -178,6 +178,25 @@ script = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Actors/Player"]
-position = Vector2( 16, 16 )
+position = Vector2( 64, 64 )
 texture = SubResource( 21 )
 centered = false
+
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_right = 1.0
+
+[node name="HFlowContainer" type="VFlowContainer" parent="GUI"]
+margin_right = 93.0
+margin_bottom = 14.0
+
+[node name="CurrentTurnLabel" type="Label" parent="GUI/HFlowContainer"]
+margin_right = 81.0
+margin_bottom = 14.0
+text = "Current turn:"
+
+[node name="CurrentTurnValueLabel" type="Label" parent="GUI/HFlowContainer"]
+margin_left = 85.0
+margin_right = 93.0
+margin_bottom = 14.0
+text = "0"
+align = 2

@@ -1,7 +1,12 @@
 extends Node
 
 var baseMoveSpeed = 100
-var currentMoveSpeed = 100
+var currentMoveSpeed = baseMoveSpeed
+onready var turnSystem = $"../../TurnSystem"
+onready var turnCounter = $"../../TurnSystem/TurnCounter"
+
+
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -36,9 +41,16 @@ func _tryToMove(x, y, diagonal):
 	if !diagonal:
 		$Sprite.position.x = $Sprite.position.x + x
 		$Sprite.position.y = $Sprite.position.y + y
+		turnCounter._advanceTime(currentMoveSpeed)
+		
+		
 	if diagonal:
 		$Sprite.position.x = $Sprite.position.x + x
 		$Sprite.position.y = $Sprite.position.y + y
+		turnCounter._advanceTime(currentMoveSpeed * turnSystem.diagonalMovementCost)
+		
+		
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

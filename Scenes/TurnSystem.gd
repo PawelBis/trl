@@ -2,7 +2,7 @@ extends Node
 
 class_name TurnSystem
 
-const diagonalMovementCost = 140
+const diagonalMovementCost = 1.4
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
