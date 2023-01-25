@@ -212,5 +212,5 @@ margin_bottom = 14.0
 text = "0"
 align = 2
 
-[connection signal="command_executed" from="Actors/Player" to="GUI/HFlowContainer" method="_on_Player_command_executed"]
 [connection signal="command_executed" from="Actors/Player" to="Actors/Enemy" method="_on_Player_command_executed"]
+[connection signal="command_executed" from="Actors/Player" to="GUI/HFlowContainer" method="_on_Player_command_executed"]
