@@ -2,7 +2,7 @@ extends Node
 
 var baseMoveSpeed = 150
 var currentMoveSpeed = baseMoveSpeed
-var attackSpeed = 50
+var attackSpeed = 150
 
 var timeUnitsPool = 0
 
@@ -29,10 +29,26 @@ func _move_towards_Player(cost):
 	print("moving towards player")
 	
 func _try_to_attack_Player(cost):
-	if cost + timeUnitsPool >= attackSpeed:
-		print("attacking player")
-		timeUnitsPool = (timeUnitsPool + cost) - attackSpeed
+	var tempTimeUnitsPool = 0
+	tempTimeUnitsPool = cost + timeUnitsPool
+	
+	if tempTimeUnitsPool >= attackSpeed:
+		while tempTimeUnitsPool >= attackSpeed:
+			print("attacking player")
+			tempTimeUnitsPool = tempTimeUnitsPool - attackSpeed
+	
+		timeUnitsPool =+ tempTimeUnitsPool
 		print("pool: " + str(timeUnitsPool))
+			
+			
 	else:
 		timeUnitsPool += cost
 		print("storing time units in pool")
+			
+			
+			
+			
+
+		
+
+
