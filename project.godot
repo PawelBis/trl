@@ -10,11 +10,35 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "AiAgent",
+"language": "GDScript",
+"path": "res://Scripts/Ai/AiAgent.gd"
+}, {
+"base": "Node",
+"class": "Command",
+"language": "GDScript",
+"path": "res://Scripts/Commands/Command.gd"
+}, {
+"base": "Command",
+"class": "MoveCommand",
+"language": "GDScript",
+"path": "res://Scripts/Commands/MoveComand.gd"
+}, {
+"base": "TileMap",
+"class": "NavigationGrid",
+"language": "GDScript",
+"path": "res://Scripts/NavigationGrid.gd"
+}, {
+"base": "Node",
 "class": "TurnSystem",
 "language": "GDScript",
 "path": "res://Scripts/TurnSystem.gd"
 } ]
 _global_script_class_icons={
+"AiAgent": "",
+"Command": "",
+"MoveCommand": "",
+"NavigationGrid": "",
 "TurnSystem": ""
 }
 

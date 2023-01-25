@@ -36,17 +36,12 @@ func _physics_process(_delta):
 
 func _tryToMove(x, y, diagonal):
 	if !diagonal:
-		self.position.x = self.position.x + x
-		self.position.y = self.position.y + y
-		5
+		$Sprite.position.x = $Sprite.position.x + x
+		$Sprite.position.y = $Sprite.position.y + y
 	if diagonal:
-		self.position.x = self.position.x + x
-		self.position.y = self.position.y + y
-		1
+		$Sprite.position.x = $Sprite.position.x + x
+		$Sprite.position.y = $Sprite.position.y + y
 	emit_signal("command_executed", currentMoveSpeed)
-
-
-
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

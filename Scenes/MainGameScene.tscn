@@ -1,10 +1,12 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/1bitpack_kenney_1.2/Tilesheet/colored-transparent_packed.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/TurnCounter.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/NavigationGrid.gd" type="Script" id=4]
-[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Ai/AiAgent.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Commands/MoveComand.gd" type="Script" id=6]
+[ext_resource path="res://Assets/1bitpack_kenney_1.2/Tilesheet/1bitpack_kenny.tres" type="Texture" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=12]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -174,18 +176,8 @@ format = 1
 tile_data = PoolIntArray( 131074, 4, 0, 458760, 4, 0 )
 script = ExtResource( 4 )
 
-[node name="Actors" type="Node" parent="."]
-
-[node name="Player" type="Node2D" parent="Actors"]
-position = Vector2( 16, 64 )
-script = ExtResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="Actors/Player"]
-texture = SubResource( 21 )
-centered = false
-
-[node name="Camera2D" type="Camera2D" parent="Actors/Player"]
-current = true
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_right = 1.0
 
 [node name="GUI" type="MarginContainer" parent="Actors/Player/Camera2D"]
 anchor_right = 1.0
@@ -211,13 +203,33 @@ margin_bottom = 14.0
 text = "0"
 align = 2
 
-[node name="Enemy" type="Node2D" parent="Actors"]
-position = Vector2( 64, 80 )
+[node name="Enemy" type="Node2D" parent="."]
+position = Vector2( 131, 106 )
+
+[node name="AiAgent" type="Node" parent="Enemy"]
+script = ExtResource( 5 )
+target = NodePath("../../Player")
+
+[node name="MoveCommand" type="Node" parent="Enemy/AiAgent"]
 script = ExtResource( 6 )
 
-[node name="Sprite" type="Sprite" parent="Actors/Enemy"]
-texture = SubResource( 22 )
-centered = false
+[node name="Sprite" type="Sprite" parent="Enemy"]
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[connection signal="command_executed" from="Actors/Player" to="Actors/Enemy" method="_on_Player_command_executed"]
-[connection signal="command_executed" from="Actors/Player" to="Actors/Player/Camera2D/GUI/HFlowContainer" method="_on_Player_command_executed"]
+[node name="Player" type="Node2D" parent="."]
+position = Vector2( 38, 56 )
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = SubResource( 21 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AiAgent" type="Node" parent="Player"]
+script = ExtResource( 5 )
+
+[connection signal="child_entered_tree" from="." to="TileMap" method="on_new_node_spawned"]

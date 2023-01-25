@@ -1,4 +1,5 @@
 extends TileMap
+class_name NavigationGrid
 
 # Navigation is Astar based. Each AStart point is indexed based on
 # the position of the cell in the tileset. We store WORLD positions
@@ -20,6 +21,18 @@ func cell_to_world(map_position):
 	return to_global(world_position)
 
 
+func world_to_cell(world_position):
+	return world_to_map(to_local(world_position))
+
+
+func get_path_between_points(from_position, to_position):
+	var from_id = calculate_astar_id(world_to_cell(from_position))
+	var to_id = calculate_astar_id(world_to_cell(to_position))
+	if from_id == -1 || to_id == -1:
+		return null
+	return astar.get_point_path(from_id, to_id)
+
+
 # Check if cell is occupied. For now an occupied cell is a cell where at least
 # one collider can be found
 func is_cell_occupied(map_position):
@@ -36,7 +49,7 @@ func try_create_astar_connections(map_position):
 		var bidirectional = true
 		var neighbour_cells = [Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1), Vector2(-1, 0)]
 		for neighbour in neighbour_cells:
-			var id = calculate_astar_id(neighbour)
+			var id = calculate_astar_id(map_position + neighbour)
 			if id != -1 && !is_cell_occupied(map_position + neighbour):
 				astar.connect_points(target_astar_id, id, bidirectional)
 
@@ -53,3 +66,13 @@ func _ready():
 			var astar_id = calculate_astar_id(map_position)
 			astar.add_point(astar_id, cell_to_world(map_position))
 			try_create_astar_connections(map_position)
+
+
+# This is called whenever scene root node spawns a new child. We use this to track
+# and register new navigation agents
+func on_new_node_spawned(new_node):
+	for child in new_node.get_children():
+		if child is AiAgent:
+			child.register_to_navigation(self)
+			var cell = world_to_cell(new_node.global_position)
+			new_node.global_position = cell_to_world(cell)
