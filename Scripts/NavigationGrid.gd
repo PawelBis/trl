@@ -23,7 +23,7 @@ func is_cell_occupied(map_position):
 	return !get_world_2d().get_direct_space_state().intersect_point(world_position).empty()
 
 
-func try_create_astart_connections(map_position):
+func try_create_astar_connections(map_position):
 	var target_astar_id = calculate_astar_id(map_position)
 	if target_astar_id == -1:
 		return
@@ -50,4 +50,4 @@ func _ready():
 			var map_position = Vector2(x,y)
 			var astar_id = calculate_astar_id(map_position)
 			astar.add_point(astar_id, map_position)
-			try_create_astart_connections(map_position)
+			try_create_astar_connections(map_position)
