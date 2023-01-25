@@ -3,6 +3,9 @@ extends Node
 var baseMoveSpeed = 100
 var currentMoveSpeed = baseMoveSpeed
 
+var maxHealth = 100
+var currentHealth = maxHealth
+
 signal command_executed(cost)
 
 # Called when the node enters the scene tree for the first time.
