@@ -31,12 +31,11 @@ func try_create_astar_connections(map_position):
 	# We should connect this cell only if it is not occupied
 	if !is_cell_occupied(map_position):
 		var bidirectional = true
-		var left_astar_id = calculate_astar_id(map_position - Vector2(-1, 0))
-		var up_astar_id = calculate_astar_id(map_position - Vector2(0, -1))
-		if left_astar_id != -1:
-			astar.connect_points(target_astar_id, left_astar_id, bidirectional)
-		if up_astar_id != -1:
-			astar.connect_points(target_astar_id, up_astar_id, bidirectional)
+		var neighbour_cells = [Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1), Vector2(-1, 0)]
+		for neighbour in neighbour_cells:
+			var id = calculate_astar_id(neighbour)
+			if id != -1 && !is_cell_occupied(map_position + neighbour):
+				astar.connect_points(target_astar_id, id, bidirectional)
 
 
 # Called when the node enters the scene tree for the first time.
