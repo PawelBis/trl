@@ -10,9 +10,9 @@ func execute_command():
 	if !target || !navigation:
 		return
 	var path_to_target: Array = navigation.get_path_between_points(body.global_position, target.global_position)
+	# For now we can ignore first and last path point of the path (target and self position)
 	if path_to_target.size() > 2:
 		body.global_position = path_to_target[1]
 	emit_signal("command_on_cooldown", self)
-	print("Move executed")
 	yield(get_tree().create_timer(cooldown), "timeout")
 	emit_signal("command_off_cooldown", self)

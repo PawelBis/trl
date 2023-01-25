@@ -1,12 +1,12 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Assets/1bitpack_kenney_1.2/Tilesheet/colored-transparent_packed.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/TurnCounter.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/NavigationGrid.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Ai/AiAgent.gd" type="Script" id=5]
-[ext_resource path="res://Scripts/Commands/MoveComand.gd" type="Script" id=6]
-[ext_resource path="res://Assets/1bitpack_kenney_1.2/Tilesheet/1bitpack_kenny.tres" type="Texture" id=7]
+[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Commands/MoveComand.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=12]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -173,54 +173,11 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 show_collision = true
 format = 1
-tile_data = PoolIntArray( 131074, 4, 0, 458760, 4, 0 )
+tile_data = PoolIntArray( 0, 4, 0, 1, 4, 0, 2, 4, 0, 3, 4, 0, 4, 4, 0, 5, 4, 0, 6, 4, 0, 7, 4, 0, 8, 4, 0, 9, 4, 0, 10, 4, 0, 11, 4, 0, 12, 4, 0, 13, 4, 0, 14, 4, 0, 15, 4, 0, 65536, 4, 0, 65551, 4, 0, 131072, 4, 0, 131087, 4, 0, 196608, 4, 0, 196623, 4, 0, 262144, 4, 0, 262159, 4, 0, 327680, 4, 0, 327695, 4, 0, 393216, 4, 0, 393227, 4, 0, 393228, 4, 1, 393229, 4, 1, 393230, 4, 1, 393231, 4, 2, 458752, 4, 0, 458763, 4, 65536, 458764, 4, 65537, 458765, 4, 65537, 458766, 4, 65537, 458767, 4, 65538, 524288, 4, 0, 524299, 4, 131072, 524300, 4, 131073, 524301, 4, 131073, 524302, 4, 131073, 524303, 4, 131074, 589824, 4, 0, 589839, 4, 0, 655360, 4, 0, 655375, 4, 0, 720896, 4, 0, 720911, 4, 0, 786432, 4, 0, 786447, 4, 0, 851968, 4, 0, 851983, 4, 0, 917504, 4, 0, 917505, 4, 0, 917506, 4, 0, 917507, 4, 0, 917508, 4, 0, 917509, 4, 0, 917510, 4, 0, 917511, 4, 0, 917512, 4, 0, 917513, 4, 0, 917514, 4, 0, 917515, 4, 0, 917516, 4, 0, 917517, 4, 0, 917518, 4, 0, 917519, 4, 0 )
 script = ExtResource( 4 )
 
-[node name="GUI" type="MarginContainer" parent="."]
-anchor_right = 1.0
-
-[node name="GUI" type="MarginContainer" parent="Actors/Player/Camera2D"]
-anchor_right = 1.0
-margin_left = -512.0
-margin_top = -288.0
-margin_right = -419.0
-margin_bottom = -272.0
-
-[node name="HFlowContainer" type="VFlowContainer" parent="Actors/Player/Camera2D/GUI"]
-margin_right = 93.0
-margin_bottom = 16.0
-script = ExtResource( 2 )
-
-[node name="CurrentTurnLabel" type="Label" parent="Actors/Player/Camera2D/GUI/HFlowContainer"]
-margin_right = 81.0
-margin_bottom = 14.0
-text = "Current turn:"
-
-[node name="CurrentTurnValueLabel" type="Label" parent="Actors/Player/Camera2D/GUI/HFlowContainer"]
-margin_left = 85.0
-margin_right = 93.0
-margin_bottom = 14.0
-text = "0"
-align = 2
-
-[node name="Enemy" type="Node2D" parent="."]
-position = Vector2( 131, 106 )
-
-[node name="AiAgent" type="Node" parent="Enemy"]
-script = ExtResource( 5 )
-target = NodePath("../../Player")
-
-[node name="MoveCommand" type="Node" parent="Enemy/AiAgent"]
-script = ExtResource( 6 )
-
-[node name="Sprite" type="Sprite" parent="Enemy"]
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="Player" type="Node2D" parent="."]
-position = Vector2( 38, 56 )
+position = Vector2( 42, 61 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
@@ -229,7 +186,64 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="GUI" type="MarginContainer" parent="Player/Camera2D"]
+anchor_right = 1.0
+margin_left = -512.0
+margin_top = -288.0
+margin_right = -419.0
+margin_bottom = -272.0
+
+[node name="HFlowContainer" type="VFlowContainer" parent="Player/Camera2D/GUI"]
+margin_right = 93.0
+margin_bottom = 16.0
+script = ExtResource( 2 )
+
+[node name="CurrentTurnLabel" type="Label" parent="Player/Camera2D/GUI/HFlowContainer"]
+margin_right = 81.0
+margin_bottom = 14.0
+text = "Current turn:"
+
+[node name="CurrentTurnValueLabel" type="Label" parent="Player/Camera2D/GUI/HFlowContainer"]
+margin_left = 85.0
+margin_right = 93.0
+margin_bottom = 14.0
+text = "0"
+align = 2
+
 [node name="AiAgent" type="Node" parent="Player"]
 script = ExtResource( 5 )
 
+[node name="Enemy" type="Node2D" parent="."]
+position = Vector2( 64, 80 )
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Enemy"]
+texture = SubResource( 22 )
+centered = false
+
+[node name="FollowingEnemy" type="Node2D" parent="."]
+position = Vector2( 134, 98 )
+
+[node name="AiAgent" type="Node" parent="FollowingEnemy"]
+script = ExtResource( 5 )
+target = NodePath("../../Player")
+
+[node name="MoveCommand" type="Node" parent="FollowingEnemy/AiAgent"]
+script = ExtResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="FollowingEnemy"]
+modulate = Color( 0.992157, 0.0117647, 0.0117647, 1 )
+texture = SubResource( 22 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [connection signal="child_entered_tree" from="." to="TileMap" method="on_new_node_spawned"]
+[connection signal="command_executed" from="Player" to="Player/Camera2D/GUI/HFlowContainer" method="_on_Player_command_executed"]
+[connection signal="command_executed" from="Player" to="Enemy" method="_on_Player_command_executed"]

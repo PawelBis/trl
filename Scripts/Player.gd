@@ -36,11 +36,11 @@ func _physics_process(_delta):
 
 func _tryToMove(x, y, diagonal):
 	if !diagonal:
-		$Sprite.position.x = $Sprite.position.x + x
-		$Sprite.position.y = $Sprite.position.y + y
+		self.position.x = self.position.x + x
+		self.position.y = self.position.y + y
 	if diagonal:
-		$Sprite.position.x = $Sprite.position.x + x
-		$Sprite.position.y = $Sprite.position.y + y
+		self.position.x = self.position.x + x
+		self.position.y = self.position.y + y
 	emit_signal("command_executed", currentMoveSpeed)
 
 
