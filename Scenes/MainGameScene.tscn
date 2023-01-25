@@ -176,13 +176,40 @@ script = ExtResource( 4 )
 
 [node name="Actors" type="Node" parent="."]
 
-[node name="Player" type="Node" parent="Actors"]
+[node name="Player" type="Node2D" parent="Actors"]
+position = Vector2( 16, 64 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Actors/Player"]
-position = Vector2( 16, 32 )
 texture = SubResource( 21 )
 centered = false
+
+[node name="Camera2D" type="Camera2D" parent="Actors/Player"]
+current = true
+
+[node name="GUI" type="MarginContainer" parent="Actors/Player/Camera2D"]
+anchor_right = 1.0
+margin_left = -512.0
+margin_top = -288.0
+margin_right = -419.0
+margin_bottom = -272.0
+
+[node name="HFlowContainer" type="VFlowContainer" parent="Actors/Player/Camera2D/GUI"]
+margin_right = 93.0
+margin_bottom = 16.0
+script = ExtResource( 2 )
+
+[node name="CurrentTurnLabel" type="Label" parent="Actors/Player/Camera2D/GUI/HFlowContainer"]
+margin_right = 81.0
+margin_bottom = 14.0
+text = "Current turn:"
+
+[node name="CurrentTurnValueLabel" type="Label" parent="Actors/Player/Camera2D/GUI/HFlowContainer"]
+margin_left = 85.0
+margin_right = 93.0
+margin_bottom = 14.0
+text = "0"
+align = 2
 
 [node name="Enemy" type="Node2D" parent="Actors"]
 position = Vector2( 64, 80 )
@@ -192,25 +219,5 @@ script = ExtResource( 6 )
 texture = SubResource( 22 )
 centered = false
 
-[node name="GUI" type="MarginContainer" parent="."]
-anchor_right = 1.0
-
-[node name="HFlowContainer" type="VFlowContainer" parent="GUI"]
-margin_right = 93.0
-margin_bottom = 14.0
-script = ExtResource( 2 )
-
-[node name="CurrentTurnLabel" type="Label" parent="GUI/HFlowContainer"]
-margin_right = 81.0
-margin_bottom = 14.0
-text = "Current turn:"
-
-[node name="CurrentTurnValueLabel" type="Label" parent="GUI/HFlowContainer"]
-margin_left = 85.0
-margin_right = 93.0
-margin_bottom = 14.0
-text = "0"
-align = 2
-
 [connection signal="command_executed" from="Actors/Player" to="Actors/Enemy" method="_on_Player_command_executed"]
-[connection signal="command_executed" from="Actors/Player" to="GUI/HFlowContainer" method="_on_Player_command_executed"]
+[connection signal="command_executed" from="Actors/Player" to="Actors/Player/Camera2D/GUI/HFlowContainer" method="_on_Player_command_executed"]
