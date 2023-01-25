@@ -1,11 +1,12 @@
 extends TileMap
 
 # Navigation is Astar based. Each AStart point is indexed based on
-# the position of the cell in the tileset. AWe store MAP(grid) positions
-# of the points, not a WORLD positions. 
+# the position of the cell in the tileset. We store WORLD positions
+# of the points, not grid positions. This way we can use paths returned by the 
+# astar directly.
 var astar = AStar2D.new()
-var texture = preload("res://icon.png")
 var grid_rect
+
 
 # Returns -1 if given tilemap_position is out of the grid
 func calculate_astar_id(tilemap_position):
@@ -14,12 +15,15 @@ func calculate_astar_id(tilemap_position):
 	return tilemap_position.x + tilemap_position.y * grid_rect.size.y
 
 
+func cell_to_world(map_position):
+	var world_position = map_to_world(map_position) + (cell_size / 2)
+	return to_global(world_position)
+
+
 # Check if cell is occupied. For now an occupied cell is a cell where at least
 # one collider can be found
 func is_cell_occupied(map_position):
-	var world_position = map_to_world(map_position) + (cell_size / 2)
-	world_position = to_global(world_position)
-	# For now check if there is any collision at the world location
+	var world_position = cell_to_world(map_position)
 	return !get_world_2d().get_direct_space_state().intersect_point(world_position).empty()
 
 
@@ -27,7 +31,6 @@ func try_create_astar_connections(map_position):
 	var target_astar_id = calculate_astar_id(map_position)
 	if target_astar_id == -1:
 		return
-
 	# We should connect this cell only if it is not occupied
 	if !is_cell_occupied(map_position):
 		var bidirectional = true
@@ -48,5 +51,5 @@ func _ready():
 		for x in range(top_left.x, bottom_right.x):
 			var map_position = Vector2(x,y)
 			var astar_id = calculate_astar_id(map_position)
-			astar.add_point(astar_id, map_position)
+			astar.add_point(astar_id, cell_to_world(map_position))
 			try_create_astar_connections(map_position)
