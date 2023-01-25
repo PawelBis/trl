@@ -166,7 +166,7 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 show_collision = true
 format = 1
-tile_data = PoolIntArray( 196613, 3, 3, 196614, 3, 65539, 196615, 3, 65536, 196616, 3, 0, 196617, 3, 65540, 196618, 3, 65536, 196619, 3, 65540, 262148, 3, 65537, 262149, 3, 65537, 262150, 3, 2, 262151, 3, 0, 262152, 3, 3, 262153, 3, 2, 262154, 3, 65539, 262155, 3, 0, 327684, 3, 4, 327685, 3, 65536, 327686, 4, 0, 851985, 4, 0 )
+tile_data = PoolIntArray( 131074, 4, 0, 458760, 4, 0 )
 script = ExtResource( 4 )
 
 [node name="Actors" type="Node" parent="."]
