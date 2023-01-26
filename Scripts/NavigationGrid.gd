@@ -7,13 +7,14 @@ class_name NavigationGrid
 # astar directly.
 var astar = AStar2D.new()
 var grid_rect
+export(bool) var debug_navigation
 
 
 # Returns -1 if given tilemap_position is out of the grid
 func calculate_astar_id(tilemap_position):
 	if !grid_rect.has_point(tilemap_position):
 		return -1
-	return tilemap_position.x + tilemap_position.y * grid_rect.size.y
+	return tilemap_position.x + tilemap_position.y * grid_rect.size.x
 
 
 func cell_to_world(map_position):
@@ -65,7 +66,9 @@ func _ready():
 			var map_position = Vector2(x,y)
 			var astar_id = calculate_astar_id(map_position)
 			astar.add_point(astar_id, cell_to_world(map_position))
+			print(astar_id)
 			try_create_astar_connections(map_position)
+	self.update()
 
 
 # This is called whenever scene root node spawns a new child. We use this to track
@@ -76,3 +79,16 @@ func on_new_node_spawned(new_node):
 			child.register_to_navigation(self)
 			var cell = world_to_cell(new_node.global_position)
 			new_node.global_position = cell_to_world(cell)
+
+
+func _draw():
+	if !debug_navigation:
+		return
+	for astar_cell in astar.get_points():
+		var point_position = astar.get_point_position(astar_cell)
+		draw_circle(point_position, 2.0, Color.lime)
+		for connection in astar.get_point_connections(astar_cell):
+			var target_position = astar.get_point_position(connection)
+			draw_line(point_position, target_position, Color.red)
+
+
