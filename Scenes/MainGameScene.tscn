@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/1bitpack_kenney_1.2/Tilesheet/colored-transparent_packed.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/TurnCounter.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/Ai/AiAgent.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Commands/MoveComand.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/Commands/MeleeCommand.gd" type="Script" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=12]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -165,6 +166,10 @@ region = Rect2( 400, 0, 16, 16 )
 atlas = ExtResource( 1 )
 region = Rect2( 448, 96, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 1 )
+region = Rect2( 576, 96, 16, 16 )
+
 [node name="Root" type="Node2D"]
 
 [node name="Grid" type="TileMap" parent="."]
@@ -237,16 +242,17 @@ target = NodePath("../../Player")
 [node name="MoveCommand" type="Node" parent="FollowingEnemy/AiAgent"]
 script = ExtResource( 7 )
 cost = 150
+cooldown = 1.0
 
-[node name="AttackCommand" type="Node" parent="FollowingEnemy/AiAgent"]
-script = ExtResource( 7 )
-cost = 150
+[node name="MeleeCommand" type="Node" parent="FollowingEnemy/AiAgent"]
+script = ExtResource( 8 )
+cooldown = 2.0
+animation = SubResource( 23 )
 
 [node name="Sprite" type="Sprite" parent="FollowingEnemy"]
 modulate = Color( 0.992157, 0.0117647, 0.0117647, 1 )
 texture = SubResource( 22 )
 
-[connection signal="child_entered_tree" from="." to="Grid" method="_on_Root_child_entered_tree"]
 [connection signal="child_entered_tree" from="." to="Grid" method="on_new_node_spawned"]
 [connection signal="command_executed" from="Player" to="Player/Camera2D/GUI/HFlowContainer" method="_on_Player_command_executed"]
 [connection signal="command_executed" from="Player" to="Enemy" method="_on_Player_command_executed"]

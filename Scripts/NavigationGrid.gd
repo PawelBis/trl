@@ -66,7 +66,6 @@ func _ready():
 			var map_position = Vector2(x,y)
 			var astar_id = calculate_astar_id(map_position)
 			astar.add_point(astar_id, cell_to_world(map_position))
-			print(astar_id)
 			try_create_astar_connections(map_position)
 	self.update()
 
