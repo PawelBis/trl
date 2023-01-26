@@ -11,7 +11,6 @@ signal command_executed(command)
 signal command_off_cooldown(command)
 signal command_on_cooldown(command)
 
-
 func execute_command():
 	pass
 

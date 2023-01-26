@@ -34,16 +34,8 @@ func _try_to_attack_Player(cost):
 	
 		timeUnitsPool =+ tempTimeUnitsPool
 		print("pool: " + str(timeUnitsPool))
-			
-			
 	else:
 		timeUnitsPool += cost
 		print("storing time units in pool")
-			
-			
-			
-			
-
-		
 
 

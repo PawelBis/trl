@@ -165,9 +165,9 @@ region = Rect2( 400, 0, 16, 16 )
 atlas = ExtResource( 1 )
 region = Rect2( 448, 96, 16, 16 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Root" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Grid" type="TileMap" parent="."]
 tile_set = SubResource( 11 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
@@ -175,10 +175,9 @@ show_collision = true
 format = 1
 tile_data = PoolIntArray( 0, 4, 0, 1, 4, 0, 2, 4, 0, 3, 4, 0, 4, 4, 0, 5, 4, 0, 6, 4, 0, 7, 4, 0, 8, 4, 0, 9, 4, 0, 10, 4, 0, 11, 4, 0, 12, 4, 0, 13, 4, 0, 14, 4, 0, 15, 4, 0, 16, 4, 0, 17, 4, 0, 18, 4, 0, 19, 4, 0, 20, 4, 0, 21, 4, 0, 65536, 4, 0, 65553, 4, 0, 65557, 4, 0, 65558, 4, 0, 65559, 4, 0, 65560, 4, 0, 131072, 4, 0, 131089, 4, 0, 131093, 4, 0, 131096, 4, 0, 196608, 4, 0, 196625, 4, 0, 196627, 4, 0, 196629, 4, 0, 196632, 4, 0, 262144, 4, 0, 262161, 4, 0, 262165, 4, 0, 262166, 4, 0, 262167, 4, 0, 262168, 4, 0, 327680, 4, 0, 327701, 4, 0, 393216, 4, 0, 393227, 4, 0, 393228, 4, 1, 393229, 4, 1, 393230, 4, 1, 393231, 4, 2, 393233, 4, 0, 393235, 4, 0, 393237, 4, 0, 458752, 4, 0, 458763, 4, 65536, 458764, 4, 65537, 458765, 4, 65537, 458766, 4, 65537, 458767, 4, 65538, 458769, 4, 0, 458773, 4, 0, 524288, 4, 0, 524299, 4, 131072, 524300, 4, 131073, 524301, 4, 131073, 524302, 4, 131073, 524303, 4, 131074, 524305, 4, 0, 524307, 4, 0, 524309, 4, 0, 589824, 4, 0, 589841, 4, 0, 589845, 4, 0, 655360, 4, 0, 655377, 4, 0, 655379, 4, 0, 655381, 4, 0, 720896, 4, 0, 720913, 4, 0, 720917, 4, 0, 786432, 4, 0, 786449, 4, 0, 786451, 4, 0, 786453, 4, 0, 851968, 4, 0, 851985, 4, 0, 851989, 4, 0, 917504, 4, 0, 917505, 4, 0, 917506, 4, 0, 917507, 4, 0, 917508, 4, 0, 917509, 4, 0, 917510, 4, 0, 917511, 4, 0, 917512, 4, 0, 917513, 4, 0, 917514, 4, 0, 917515, 4, 0, 917516, 4, 0, 917517, 4, 0, 917518, 4, 0, 917519, 4, 0, 917520, 4, 0, 917521, 4, 0, 917522, 4, 0, 917523, 4, 0, 917524, 4, 0, 917525, 4, 0 )
 script = ExtResource( 4 )
-debug_navigation = true
 
 [node name="Player" type="Node2D" parent="."]
-position = Vector2( 42, 61 )
+position = Vector2( 25, 23 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
@@ -229,7 +228,7 @@ texture = SubResource( 22 )
 centered = false
 
 [node name="FollowingEnemy" type="Node2D" parent="."]
-position = Vector2( 134, 98 )
+position = Vector2( 99, 63 )
 
 [node name="AiAgent" type="Node" parent="FollowingEnemy"]
 script = ExtResource( 5 )
@@ -237,14 +236,17 @@ target = NodePath("../../Player")
 
 [node name="MoveCommand" type="Node" parent="FollowingEnemy/AiAgent"]
 script = ExtResource( 7 )
+cost = 150
+
+[node name="AttackCommand" type="Node" parent="FollowingEnemy/AiAgent"]
+script = ExtResource( 7 )
+cost = 150
 
 [node name="Sprite" type="Sprite" parent="FollowingEnemy"]
 modulate = Color( 0.992157, 0.0117647, 0.0117647, 1 )
 texture = SubResource( 22 )
-__meta__ = {
-"_edit_lock_": true
-}
 
-[connection signal="child_entered_tree" from="." to="TileMap" method="on_new_node_spawned"]
+[connection signal="child_entered_tree" from="." to="Grid" method="_on_Root_child_entered_tree"]
+[connection signal="child_entered_tree" from="." to="Grid" method="on_new_node_spawned"]
 [connection signal="command_executed" from="Player" to="Player/Camera2D/GUI/HFlowContainer" method="_on_Player_command_executed"]
 [connection signal="command_executed" from="Player" to="Enemy" method="_on_Player_command_executed"]
