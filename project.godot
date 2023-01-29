@@ -54,6 +54,10 @@ config/name="TRL"
 run/main_scene="res://Scenes/MainGameScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PlayerVariables="*res://Scripts/Singletons/PlayerVariables.gd"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

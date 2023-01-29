@@ -17,7 +17,7 @@ func _on_Player_command_executed(cost):
 		_move_towards_Player(cost)
 
 func _move_towards_Player(cost):
-	print("moving towards player")
+	pass
 	
 func _try_to_attack_Player(cost):
 	
@@ -28,14 +28,12 @@ func _try_to_attack_Player(cost):
 	tempTimeUnitsPool = cost + timeUnitsPool
 	
 	if tempTimeUnitsPool >= attackSpeed:
-		while tempTimeUnitsPool >= attackSpeed:
-			print("attacking player")
-			tempTimeUnitsPool = tempTimeUnitsPool - attackSpeed
-	
-		timeUnitsPool =+ tempTimeUnitsPool
-		print("pool: " + str(timeUnitsPool))
+		while tempTimeUnitsPool >= attackSpeed:			
+			tempTimeUnitsPool = tempTimeUnitsPool - attackSpeed	
+		timeUnitsPool =+ tempTimeUnitsPool	
+			
 	else:
 		timeUnitsPool += cost
-		print("storing time units in pool")
+		
 
 

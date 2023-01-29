@@ -10,8 +10,16 @@ var navigation_grid
 var focus_target
 
 
+var timeUnitsPool = 0
+var tempTimeUnitsPool = 0
+var lastPlayerCommandCost = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var player = PlayerVariables.player
+	player.connect("command_executed", self, "on_player_command_executed")
+	
+	
 	if target && has_node(target):
 		focus_target = get_node(target)
 	for child in get_children():
@@ -30,24 +38,6 @@ func register_to_navigation(new_navigation_grid):
 	navigation_grid = new_navigation_grid
 	registered = true
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	# For now just execute first command, for tests
-	var hi_score = 0
-	var hi_score_command = null
-	var path = []
-	if focus_target:
-		path = navigation_grid.get_path_between_points(get_parent().global_position, focus_target.global_position)
-	for command in ready_commands:
-		var command_score = command.calculate_score(path)
-		if command_score > hi_score:
-			hi_score = command_score
-			hi_score_command = command
-	if hi_score_command:
-		hi_score_command.execute(path)
-
-
 func on_command_executed(command):
 	print("I should consume some time units here!")
 
@@ -58,3 +48,31 @@ func on_command_off_cooldown(command):
 
 func on_command_on_cooldown(command):
 	ready_commands.erase(command)
+
+
+func on_player_command_executed(cost):
+	timeUnitsPool += cost
+	lastPlayerCommandCost = cost
+	
+	var actions_exhausted = false
+	
+	while !actions_exhausted:
+		var hi_score = 0
+		var hi_score_command = null
+		var path = []
+		if focus_target:
+			path = navigation_grid.get_path_between_points(get_parent().global_position, focus_target.global_position)
+		for command in ready_commands:
+			var command_score = command.calculate_score(timeUnitsPool, path)
+			if command_score > hi_score:
+				hi_score = command_score
+				hi_score_command = command
+				
+		if hi_score_command:
+			timeUnitsPool = timeUnitsPool - hi_score_command.cost
+			hi_score_command.execute(path)		
+			print("pool: " + str(timeUnitsPool))
+		else:
+			actions_exhausted = true
+	
+	

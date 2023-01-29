@@ -182,7 +182,7 @@ tile_data = PoolIntArray( 0, 4, 0, 1, 4, 0, 2, 4, 0, 3, 4, 0, 4, 4, 0, 5, 4, 0, 
 script = ExtResource( 4 )
 
 [node name="Player" type="Node2D" parent="."]
-position = Vector2( 25, 23 )
+position = Vector2( 53, 62 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
@@ -242,11 +242,9 @@ target = NodePath("../../Player")
 [node name="MoveCommand" type="Node" parent="FollowingEnemy/AiAgent"]
 script = ExtResource( 7 )
 cost = 150
-cooldown = 1.0
 
 [node name="MeleeCommand" type="Node" parent="FollowingEnemy/AiAgent"]
 script = ExtResource( 8 )
-cooldown = 2.0
 animation = SubResource( 23 )
 
 [node name="Sprite" type="Sprite" parent="FollowingEnemy"]

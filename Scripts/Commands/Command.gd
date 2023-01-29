@@ -17,7 +17,7 @@ func execute(path_to_target: Array):
 
 
 # This is used only by the AiAgents. For now we calculate this only for meelee agent, so just check if distance_to_player is greater than 0
-func calculate_score(path_to_target: Array) -> float:
+func calculate_score(timeunitspool: int, path_to_target: Array) -> float:
 	return 0.0
 
 # Called when the node enters the scene tree for the first time.
