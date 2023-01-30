@@ -1,11 +1,6 @@
 extends Command
 class_name MoveCommand
 
-# For now we set cost and cooldown to custom values for tests. In game the coldown should be 0
-func _ready():
-	cost = 150
-	cooldown = 0
-
 func execute(path_to_target: Array):
 	if !target || !navigation:
 		return

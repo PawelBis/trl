@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/LevelGeneration/MapFragmentResource.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Resources/MapFragments/Cave001.png" type="Texture" id=2]
+[ext_resource path="res://Assets/TileSets/TileSet001.tres" type="TileSet" id=3]
+
+[resource]
+script = ExtResource( 1 )
+tile_set = ExtResource( 3 )
+map_chunk = ExtResource( 2 )

@@ -11,8 +11,6 @@ var focus_target
 
 
 var timeUnitsPool = 0
-var tempTimeUnitsPool = 0
-var lastPlayerCommandCost = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,7 +50,6 @@ func on_command_on_cooldown(command):
 
 func on_player_command_executed(cost):
 	timeUnitsPool += cost
-	lastPlayerCommandCost = cost
 	
 	var actions_exhausted = false
 	
