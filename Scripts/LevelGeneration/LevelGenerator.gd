@@ -33,6 +33,9 @@ func _ready():
 		image.unlock()
 		
 		MapVariables.grid.update_bitmask_region(starting_coord, image.get_size())
+		
+		# temporary solution for updating NavigationGrid
+		MapVariables.grid._ready()
 
 
 		

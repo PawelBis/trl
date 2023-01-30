@@ -70,6 +70,7 @@ func _ready():
 	self.update()
 
 
+
 # This is called whenever scene root node spawns a new child. We use this to track
 # and register new navigation agents
 func on_new_node_spawned(new_node):
