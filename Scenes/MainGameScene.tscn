@@ -36,7 +36,7 @@ script = ExtResource( 4 )
 
 [node name="LevelGenerator" type="Node" parent="."]
 script = ExtResource( 9 )
-map_chunks = ExtResource( 10 )
+map_chunks = [ ExtResource( 10 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 10 ) ]
 
 [node name="Player" type="Node2D" parent="."]
 position = Vector2( 53, 62 )
